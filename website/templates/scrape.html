@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Web Scraper</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function toggleContentOptions() {
+            const contentMode = document.querySelector('input[name="content_mode"]:checked')?.value;
+            document.getElementById('entire-options').classList.toggle('hidden', contentMode !== 'entire');
+            document.getElementById('bespoke-options').classList.toggle('hidden', contentMode !== 'bespoke');
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex items-center justify-center px-4">
+    <div class="bg-white p-6 rounded-2xl shadow-md w-full max-w-xl">
+        <h1 class="text-2xl font-semibold mb-4 text-center">Smart Web Scraper</h1>
+        <form action="/" method="POST" class="space-y-4">
+
+            <!-- URL input -->
+            <input type="url" name="url" placeholder="Enter a URL to scrape"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+
+            <!-- Content Mode Selector -->
+            <fieldset class="space-y-2">
+                <legend class="font-medium">Select content mode:</legend>
+                <label class="block">
+                    <input type="radio" name="content_mode" value="entire" onchange="toggleContentOptions()" required>
+                    <span class="ml-2">Entire Page Content</span>
+                </label>
+                <label class="block">
+                    <input type="radio" name="content_mode" value="bespoke" onchange="toggleContentOptions()" required>
+                    <span class="ml-2">Bespoke Content</span>
+                </label>
+            </fieldset>
+
+            <!-- Entire Page Options -->
+            <div id="entire-options" class="hidden">
+                <label class="block mt-2 font-medium">Presentation:</label>
+                <select name="presentation" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    <option value="" disabled selected>Select presentation style</option>
+                    <option value="prettify">Formatted HTML (prettify)</option>
+                    <option value="get_text">Visible Text Only (get_text)</option>
+                </select>
+            </div>
+
+            <!-- Bespoke Options -->
+            <div id="bespoke-options" class="hidden space-y-2">
+                <label class="block font-medium">What do you want to extract?</label>
+                <select name="mode" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    <option value="" disabled selected>Select type</option>
+                    <option value="text">Text</option>
+                    <option value="images">Images</option>
+                    <option value="links">Links</option>
+                    <option value="headers">Headers (h1–h3)</option>
+                </select>
+
+                <input type="text" name="keyword" placeholder="Optional keyword (e.g. 'pricing')"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                Scrape
+            </button>
+        </form>
+
+        {% if result %}
+        <div class="mt-6">
+            <h2 class="text-lg font-medium mb-2">Scraped Result:</h2>
+            <div class="p-3 border border-gray-200 rounded-lg text-sm whitespace-pre-wrap max-h-96 overflow-y-auto">
+                {{ result | safe }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
