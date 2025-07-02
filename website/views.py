@@ -7,10 +7,11 @@ views = Blueprint("views", __name__)
 
 @views.route("/", methods=["GET", "POST"])
 def home():
+    url = None
     result = None
     if request.method == "POST":
         url = request.form.get("url")
         soup = scrapeURL(url)
         if soup:
             result = html.escape(soup.prettify())
-    return render_template("scrape.html", result=result)
+    return render_template("scrape.html", url=url, result=result)
