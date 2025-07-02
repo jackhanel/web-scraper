@@ -12,5 +12,5 @@ def home():
         url = request.form.get("url")
         soup = scrapeURL(url)
         if soup:
-            result = html.escape(soup.prettify())  # Escapes <, >, quotes, etc.
+            result = html.escape(soup.prettify())
     return render_template("scrape.html", result=result)

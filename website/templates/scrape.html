@@ -10,6 +10,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <style>
+        /* Override Prism's default monospace font */
+        code[class*="language-"],
+        pre[class*="language-"] {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif !important;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+    </style>
+
 </head>
 
 <body class="bg-gray-100 h-screen">
@@ -32,9 +42,7 @@
         <div class="md:w-1/2 w-full bg-white p-6 shadow-md rounded-2xl overflow-y-auto">
             <h2 class="text-xl font-medium mb-4">Scraped HTML</h2>
             {% if result %}
-            <pre class="text-sm overflow-x-auto whitespace-pre font-sans">
-                <code class="language-markup font-sans">{{ result | safe }}</code>
-            </pre>
+            <pre class="text-sm overflow-x-auto whitespace-pre"><code class="language-markup">{{ result | safe }}</code></pre>
             {% else %}
             <p class="text-gray-500">HTML will appear here after you scrape a URL.</p>
             {% endif %}
